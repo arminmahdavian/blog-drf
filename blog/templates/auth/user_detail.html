@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+
+{% block main %}
+
+    <div>
+
+        <h1>User Details</h1>
+        <h3>{{ user.username }}</h3>
+        <h4>First Name: {{ user.first_name }}</h4>
+        <h4>Last Name: {{ user.last_name }}</h4>
+        <p>Email: {{ user.email }}</p>
+        <p>Date Joined: {{ user.date_joined }}</p>
+        <p>Last Login: {{ user.last_login }}</p>
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+
+{% block main %}
+
+    {% for user in object_list %}
+
+        <div>
+
+            <h2>{{ user.username }}</h2>
+
+        </div>
+        <hr>
+
+    {% endfor %}
+
+{% endblock %}
+
