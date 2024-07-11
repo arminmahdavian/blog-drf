@@ -7,6 +7,7 @@ from blog.models import Article, User
 from .serializers import ArticleSerializer, UserSerializer
 from rest_framework import generics, status
 from .permissions import IsStaffOrReadOnly, IsAuthorOrReadOnly, IsSuperUserOrStaffReadOnly
+from django.views.generic import TemplateView
 
 
 # Create your views here.
@@ -42,4 +43,24 @@ class RevokeToken(APIView):
     def delete(self, request):
         request.auth.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class CustomConfirmEmailView(TemplateView):
+    template_name = 'account_confirm_email.html'
+    # def get(self, request, *args, **kwargs):
+    #     print("--------------------------------")
+    #     print("CustomConfirmEmailView called")
+    #     print("--------------------------------")
+    #     return super().get(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        key = kwargs.get('key')  # Access the captured key from the URL
+        print("--------------------------------")
+        print(f"CustomConfirmEmailView called with key: {key}")
+        print("--------------------------------")
+        return super().get(request, *args, **kwargs)
+
+    def get_template_names(self):
+        return [self.template_name]
+
 
