@@ -16,43 +16,39 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-from rest_framework.authtoken.views import obtain_auth_token
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
-from api.views import RevokeToken, CustomConfirmEmailView
+
+# from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+# from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
+from api.views import CustomConfirmEmailView
 from dj_rest_auth.views import PasswordResetConfirmView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
+    path('api/', include('api.urls')),
+    path('blog/', include('blog.urls')),
+    # path('api-auth/', include('rest_framework.urls')),
 
-    path('api/token-auth/', obtain_auth_token), # for Token Authentication
-    path('api/revoke/', RevokeToken.as_view()), # for Revoking Token
 
-    path('api/rest-auth/', include('dj_rest_auth.urls')),    # for dj rest auth
+    # for dj rest auth
+    path('api/rest-auth/', include('dj_rest_auth.urls')),
     re_path(
         r'^account-confirm-email/(?P<key>[-:\w]+)/$',
         CustomConfirmEmailView.as_view(),
         name='account_confirm_email',
     ),
-    # re_path(
-    #     r'^account-confirm-email/(?P<key>[-:\w]+)/$', TemplateView.as_view(),
-    #     name='account_confirm_email',
-    # ),
     path('api/rest-auth/registration/', include('dj_rest_auth.registration.urls')),
 
-    # for dj rest auth registration
     path('api/rest-auth/password/reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),    # for reset password
 
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
-    path('api/', include('api.urls')),
+    # # for JWT Authentication
+    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
-    path('blog/', include('blog.urls')),
 
-    path('api/schema', SpectacularAPIView.as_view(), name='schema'),
-    path('api/docs/', SpectacularSwaggerView.as_view(url_name="schema"), name='swagger-ui'),
+    # path('api/schema', SpectacularAPIView.as_view(), name='schema'),
+    # path('api/docs/', SpectacularSwaggerView.as_view(url_name="schema"), name='swagger-ui'),
 
 ]

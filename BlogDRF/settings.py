@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # External
+    'rest_framework',
+    'rest_framework.authtoken',
     # dj-rest-auth
     'django.contrib.sites',
     'allauth',
@@ -47,9 +50,6 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'dj_rest_auth.registration',
 
-    # External
-    'rest_framework',
-    'rest_framework.authtoken',
     'drf_spectacular',
     # 'rest_framework_simplejwt',
 
@@ -151,10 +151,11 @@ REST_FRAMEWORK = {
 
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-    # 'rest_framework.authentication.BasicAuthentication',
-    # 'rest_framework.authentication.SessionAuthentication',
-    'rest_framework.authentication.TokenAuthentication',
-    # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 
@@ -181,11 +182,16 @@ SPECTACULAR_SETTINGS = {
 
 SITE_ID = 1
 
+REST_AUTH = {
+    'USE_JWT': True,
+    'JWT_AUTH_HTTPONLY': False,
+    'JWT_AUTH_COOKIE': 'access',
+    'JWT_AUTH_REFRESH_COOKIE': 'refresh'
+}
+
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-ACCOUNT_EMAIL_CONFIRMATION_EMAIL = 'account/email/email_confirmation_message.txt'
-
-ACCOUNT_ADAPTER = 'api.adapters.CustomAccountAdapter'
 
 
 
