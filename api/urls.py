@@ -11,7 +11,7 @@ router.register(r'articles', views.ArticleViewSet, basename="articles")
 # urlpatterns = router.urls
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
 
 ]
 
